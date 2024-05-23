@@ -3,8 +3,8 @@ services:
   cowrie:
     build: ./cowrie
     ports:
-      - "2222:2222"  # Cowrie SSH
-      - "2223:2223"  # Cowrie Telnet
+      - "22:22"  # Cowrie SSH
+      - "23:23"  # Cowrie Telnet
     volumes:
       - ./cowrie/logs:/cowrie/log
       
