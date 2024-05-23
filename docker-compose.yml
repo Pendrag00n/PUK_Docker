@@ -2,6 +2,7 @@ version: '3'
 services:
   cowrie:
     build: ./cowrie
+    network_mode: "host"
     ports:
       - "22:22"  # Cowrie SSH
       - "23:23"  # Cowrie Telnet
@@ -20,4 +21,4 @@ services:
 
 networks:
   default:
-    driver: host
+    driver: bridge
