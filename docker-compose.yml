@@ -1,24 +1,10 @@
 version: '3'
-services:
-  cowrie:
-    build: ./cowrie
-    network_mode: "host"
-    ports:
-      - "22:22"  # Cowrie SSH
-      - "23:23"  # Cowrie Telnet
-    volumes:
-      - ./cowrie/logs:/cowrie/log
-
-  elk:
-    image: sebp/elk
-    ports:
-      - "5601:5601"  # Kibana
-      - "9200:9200"  # Elasticsearch
-      - "5044:5044"  # Logstash
-    volumes:
-      - ./elk/logs:/var/log/elasticsearch
-      - ./elk/logstash.conf:/etc/logstash/conf.d/logstash.conf
-
-networks:
-  default:
-    driver: bridge
+ 2 services:
+ 3   cowrie:
+ 4     build: ./cowrie
+ 5     restart: always
+ 6     ports:
+ 7       - "22:2222"
+ 8       - "23:2223"
+ 9     volumes:
+10       - ./cowrie/logs:/cowrie/log
