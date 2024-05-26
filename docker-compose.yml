@@ -1,10 +1,10 @@
 version: '3'
- 2 services:
- 3   cowrie:
- 4     build: ./cowrie
- 5     restart: always
- 6     ports:
- 7       - "22:2222"
- 8       - "23:2223"
- 9     volumes:
-10       - ./cowrie/logs:/cowrie/log
+  services:
+    cowrie:
+      build: ./cowrie
+      restart: always
+      ports:
+        - "22:2222"
+        - "23:2223"
+      volumes:
+        - ./cowrie/logs:/cowrie/log
