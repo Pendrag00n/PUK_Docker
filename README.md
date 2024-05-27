@@ -1,1 +1,2 @@
-Run using ´sudo bash build.sh´
+Run using `sudo bash build.sh`
+  
