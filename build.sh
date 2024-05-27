@@ -7,6 +7,7 @@ else
     echo " ** Installing docker"
     curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh
 fi
+
 echo " ** Testing docker-compose installation"
 if [ -x "$(which docker-compose)" ]; then
     echo " ** docker-compose is already installed"
@@ -15,10 +16,18 @@ else
     sudo apt install docker-compose -y
 fi
 
+echo " ** Testing if port 22 is in use"
+if ss -tuln | grep -q ':22\b'; then
+    echo "Port 22 is in use. Exiting..."
+    exit 1
+else
+    echo " ** Port 22 is not in use."
+fi
+
 echo " ** Building the docker image and starting the container..."
 docker-compose down && docker-compose up -d
 if [ $? -eq 0 ]; then
-    echo " ** Docker container started successfully"
+    echo " ** Docker container started successfully!"
     echo ""
     echo " Access web interface on port 5601"
     echo " Go to Stack Management > Index Patterns"
