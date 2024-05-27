@@ -11,6 +11,8 @@ services:
       - "9200:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+    networks:
+      - elk
 
   logstash:
     build: ./logstash
@@ -20,14 +22,18 @@ services:
       - ./cowrie/logs:/var/log/cowrie
     depends_on:
       - elasticsearch
+    networks:
+      - elk
 
   kibana:
     build: ./kibana
     container_name: kibana
     ports:
-      - "5601:5601"
+      - "127.0.0.1:5601:5601"
     depends_on:
       - elasticsearch
+    networks:
+      - elk
 
   cowrie:
     image: cowrie/cowrie:latest
@@ -37,7 +43,12 @@ services:
       - ./cowrie/logs:/var/log/cowrie
     ports:
       - "22:2222"
+    networks:
+      - elk
 
 volumes:
   esdata:
 
+networks:
+  elk:
+    driver: bridge
