@@ -24,6 +24,9 @@ else
     echo " ** Port 22 is not in use."
 fi
 
+echo " ** Changing dir permissions"
+sudo chmod -R 777 *
+
 echo " ** Building the docker image and starting the container..."
 docker-compose down && docker-compose up -d
 if [ $? -eq 0 ]; then
