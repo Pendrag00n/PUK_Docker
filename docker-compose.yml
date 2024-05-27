@@ -1,10 +1,43 @@
-version: '3'
+version: '3.7'
+
 services:
+  elasticsearch:
+    build: ./elasticsearch
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+  logstash:
+    build: ./logstash
+    container_name: logstash
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./cowrie/logs:/var/log/cowrie
+    depends_on:
+      - elasticsearch
+
+  kibana:
+    build: ./kibana
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
   cowrie:
-    build: ./cowrie
-    restart: always
+    image: cowrie/cowrie:latest
+    container_name: cowrie
+    volumes:
+      - ./cowrie/cowrie.cfg:/etc/cowrie/cowrie.cfg
+      - ./cowrie/logs:/var/log/cowrie
     ports:
       - "22:2222"
-      - "23:2223"
-    volumes:
-      - ./cowrie/logs:/cowrie/log
+
+volumes:
+  esdata:
+
